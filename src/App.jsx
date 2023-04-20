@@ -25,7 +25,7 @@ function App() {
     const {value} = await Swal.fire({
       title: "New Item Information",
       html: `<input type='text' id='name' name='name' class='swal2-input' placeholder='Item' />
-              <input type='number' id='quantify' name='quantify' class='swal2-input' placeholder='Qty'/>
+              <input type='number' id='quantity' name='quantity' class='swal2-input' placeholder='Qty'/>
               <input type='text' id='unit' name='unit' class='swal2-input' placeholder='unit'/>`,
       confirmButtonText: "Add item",
       showCloseButton: true,
@@ -34,16 +34,16 @@ function App() {
       cancelButtonText: "Dismiss",
       preConfirm: () => {
         const name = Swal.getPopup().querySelector('#name').value;
-        const quantify = Swal.getPopup().querySelector('#quantify').value;
+        const quantity = Swal.getPopup().querySelector('#quantity').value;
         const unit = Swal.getPopup().querySelector('#unit').value;
-        if (!name || !quantify || !unit) {
+        if (!name || !quantity || !unit) {
           Swal.showValidationMessage('Please enter an item full information');
         }
-        return {name, quantify, unit};
+        return {name, quantity, unit};
       },
     })
     setListItems([
-      ...listItems, {id: (listItems.length + 1).toString, ...value, checked: false}
+      ...listItems, {id: (listItems.length + 1).toString(), ...value, checked: false}
     ])
   }
   const handleCheckboxChanhe = (e) => {
@@ -76,46 +76,13 @@ function App() {
         <ListItem 
           id={ListItems.id}
           name={ListItems.name} 
-          quantify={ListItems.quantity} 
+          quantity={ListItems.quantity} 
           unit={ListItems.unit} 
           checked={ListItems.checked} 
           handleCheckboxChanhe={handleCheckboxChanhe}
         />
       ))
     }
-    {/* <div className="row">
-      <div className="col-1">
-        <input 
-        type="checkbox"
-        name={listItems[1].id}
-        onChange={(e)=>handleCheckboxChanhe(e)}
-        checked={listItems[1].checked}  
-        />
-      </div>
-      <div className="col text-start">
-      {
-        listItems[1].checked ?
-        <s>{`${listItems[1].quantity} ${listItems[1].unit}`}</s> : 
-        `${listItems[1].quantity} ${listItems[1].unit}`
-      }
-      </div>
-      <div className="col-5 col-md-7 text-start"
-        style={{textDecoration: listItems[1].checked && "line-through"}}
-      >
-        {`${listItems[1].name}`}
-      </div>
-      <div className="col-4 col-md-3 btn-group btn-group-sm text-end" role="group">
-        <button className="btn btn-outline-primary">
-          <i className="bi bi-pencil-square"></i>
-          </button>
-        <button className="btn btn-outline-info">
-          <i className="bi bi-files"></i>
-          </button>
-        <button className="btn btn-outline-danger">
-          <i className="bi bi-trash2-fill"></i>
-          </button>
-      </div>
-    </div> */}
     <hr />
     <div className="row">
       <div className="col text-end">

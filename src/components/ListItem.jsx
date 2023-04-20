@@ -1,4 +1,4 @@
-const ListItem = ({id, name, quantify, unit, checked, handleCheckboxChanhe}) => {
+const ListItem = ({id, name, quantity, unit, checked, handleCheckboxChanhe}) => {
     return (
         <div className="row">
       <div className="col-1">
@@ -11,7 +11,7 @@ const ListItem = ({id, name, quantify, unit, checked, handleCheckboxChanhe}) => 
       </div>
       <div className="col text-start">
       {
-        checked ? <s>{`${quantify} ${unit}`}</s> : `${quantify} ${unit}`
+        checked ? <s>{`${quantity} ${unit}`}</s> : `${quantity} ${unit}`
       }
       </div>
       <div 
