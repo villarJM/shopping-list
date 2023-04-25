@@ -76,11 +76,9 @@ function App() {
     {
       listItems.map((ListItems) => (
         <ListItem 
-          id={ListItems.id}
-          name={ListItems.name} 
-          quantity={ListItems.quantity} 
-          unit={ListItems.unit} 
-          checked={ListItems.checked} 
+          item={ListItems}
+          listItems={listItems}
+          setListItems={setListItems}
           handleCheckboxChanhe={handleCheckboxChanhe}
         />
       ))
