@@ -2,6 +2,7 @@ import { useState } from "react"
 import ListItem from "./components/ListItem";
 import NewListItemButton from "./components/NewListItemButton";
 import Swal from 'sweetalert2'
+import ClearListButtom from "./components/ClearListButtom";
 
 function App() {
   const [listItems, setListItems] = useState([
@@ -42,6 +43,8 @@ function App() {
         return {name, quantity, unit};
       },
     })
+    if(!value.name || !value.quantity || !value.unit) return
+
     setListItems([
       ...listItems, {id: (listItems.length + 1).toString(), ...value, checked: false}
     ])
@@ -51,7 +54,6 @@ function App() {
       if (item.id === e.target.name) {
         item.checked = !item.checked;
       }
-
       return item;
 
     })
@@ -86,6 +88,7 @@ function App() {
     <hr />
     <div className="row">
       <div className="col text-end">
+        <ClearListButtom setListItems={setListItems}/>
         <NewListItemButton handleNewListItemButton={handleNewListItemButton}/>
       </div>
     </div>
