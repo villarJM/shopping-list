@@ -1,19 +1,23 @@
 import Swal from "sweetalert2";
+import {v4 as uuidv4} from 'uuid'
 
 const ListItem = ({item, listItems, setListItems, handleCheckboxChanhe}) => {
     const {id, name, quantity, unit, checked} = item;
     const deleteListItem = () => {
       const newList = listItems.filter((item) => item.id !== id);
+      localStorage.setItem("listItems", JSON.stringify(newList));
       setListItems(newList);
     }
     const cloneListItem = () => {
-      setListItems([
+      const newList = [
         ...listItems,
         {
-          id: (listItems.length + 1).toString(),
+          id: uuidv4(),
           ...item
         }
-      ])
+    ]
+      localStorage.setItem("listItems", JSON.stringify(newList));
+      setListItems(newList);
     }
     const editListItem = async () => {
       const {value} = await Swal.fire({
@@ -46,6 +50,7 @@ const ListItem = ({item, listItems, setListItems, handleCheckboxChanhe}) => {
         }
         return item;
       })
+      localStorage.setItem("listItems", JSON.stringify(newList));
       setListItems(newList);
     }
     return (

@@ -3,24 +3,12 @@ import ListItem from "./components/ListItem";
 import NewListItemButton from "./components/NewListItemButton";
 import Swal from 'sweetalert2'
 import ClearListButtom from "./components/ClearListButtom";
+import {v4 as uuidv4} from 'uuid'
 
 function App() {
-  const [listItems, setListItems] = useState([
-    {
-      id: "1",
-      name: "Tortillas",
-      quantity: 2,
-      unit: "Kg",
-      checked: false,
-    },
-    {
-      id: "2",
-      name: "Aceite",
-      quantity: 900,
-      unit: "ml",
-      checked: false,
-    },
-  ]);
+  const [listItems, setListItems] = useState(
+    JSON.parse(localStorage.getItem("listItems")) || []
+  );
 
   const handleNewListItemButton = async () => {
     const {value} = await Swal.fire({
@@ -45,9 +33,14 @@ function App() {
     })
     if(!value.name || !value.quantity || !value.unit) return
 
-    setListItems([
-      ...listItems, {id: (listItems.length + 1).toString(), ...value, checked: false}
-    ])
+    const newList = [
+        ...listItems, {id: uuidv4(), ...value, checked: false}
+    ]
+
+    localStorage.setItem("listItems", JSON.stringify(newList));
+
+    setListItems(newList);
+    
   }
   const handleCheckboxChanhe = (e) => {
     const newList = listItems.map(item => {
@@ -57,6 +50,7 @@ function App() {
       return item;
 
     })
+    localStorage.setItem("listItems", JSON.stringify(newList));
     setListItems(newList);
   }
 
@@ -74,8 +68,16 @@ function App() {
     </div>
     <hr />
     {
+      listItems.length === 0 && (
+        <h3>
+          Empty List...
+        </h3>
+      )
+    }
+    {
       listItems.map((ListItems) => (
-        <ListItem 
+        <ListItem
+          key={listItems.id}
           item={ListItems}
           listItems={listItems}
           setListItems={setListItems}
@@ -85,10 +87,14 @@ function App() {
     }
     <hr />
     <div className="row">
-      <div className="col text-end">
-        <ClearListButtom setListItems={setListItems}/>
-        <NewListItemButton handleNewListItemButton={handleNewListItemButton}/>
-      </div>
+      {
+        listItems.length >= 5 && (
+          <div className="col text-end">
+            <ClearListButtom setListItems={setListItems}/>
+            <NewListItemButton handleNewListItemButton={handleNewListItemButton}/>
+          </div>
+        )
+      }
     </div>
   </div>
   )
